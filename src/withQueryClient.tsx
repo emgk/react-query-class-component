@@ -7,14 +7,14 @@ import React from 'react';
  * Internal dependencies
  */
 import { forwardRefProps } from './types';
-import { ReactQueryClassContext } from './ReactQueryClassProvider';
+import { QueryClientClassContext } from './QueryClientClassProvider';
 
-const withReactQuery = (Element: React.ComponentClass<any>) => {
+const withQueryClient = (Element: React.ComponentClass<any>) => {
   return React.forwardRef((props: forwardRefProps, ref: React.Ref<any>) => (
-    <ReactQueryClassContext.Consumer>
+    <QueryClientClassContext.Consumer>
       {(data) => <Element reactQueries={data} {...props} ref={ref} />}
-    </ReactQueryClassContext.Consumer>
+    </QueryClientClassContext.Consumer>
   ));
 };
 
-export default withReactQuery;
+export default withQueryClient;

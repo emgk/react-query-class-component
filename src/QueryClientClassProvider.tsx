@@ -6,13 +6,13 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import { ReactQueryClassProviderProps } from './types';
+import { QueryClientClassProviderProps } from './types';
 import { isSet } from './util';
 
 // context instance
-export const ReactQueryClassContext = React.createContext<any>({});
+export const QueryClientClassContext = React.createContext<any>({});
 
-const ReactQueryClassProvider: React.FC<ReactQueryClassProviderProps> = ({
+const QueryClientClassProvider: React.FC<QueryClientClassProviderProps> = ({
   children,
   queries = {},
 }) => {
@@ -42,8 +42,10 @@ const ReactQueryClassProvider: React.FC<ReactQueryClassProviderProps> = ({
   });
 
   return (
-    <ReactQueryClassContext.Provider value={mapQueries}>{children}</ReactQueryClassContext.Provider>
+    <QueryClientClassContext.Provider value={mapQueries}>
+      {children}
+    </QueryClientClassContext.Provider>
   );
 };
 
-export default ReactQueryClassProvider;
+export default QueryClientClassProvider;

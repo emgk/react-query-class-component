@@ -7,8 +7,8 @@ A HOC Utility tool built for [react-query](https://www.npmjs.com/package/react-q
 
 ## Features
 
-- ReactQueryClassProvider (Context API provider)
-- withReactQuery (HOC)
+- QueryClientClassProvider (Context API provider)
+- withQueryClient (HOC)
 
 ## Quick Setup
 
@@ -17,7 +17,7 @@ Install package in your project
 npm i react-query-class-component
 ```
 ```tsx
-import {ReactQueryClassProvider, withReactQuery} from "react-query-class-component";
+import {QueryClientClassProvider, withQueryClient} from "react-query-class-component";
 ```
 
 ## Usage with React-Query
@@ -30,14 +30,14 @@ It supports almost all of the hooks, below are the examples of few ones:
 import React from 'react';
 
 import {QueryClient, QueryClientProvider, useQueries, useQuery} from "react-query";
-import {ReactQueryClassProvider, withReactQuery} from 'react-query-class-component';
+import {QueryClientClassProvider, withQueryClient} from 'react-query-class-component';
 
 const queryClient = new QueryClient();
 
 export const AppRoot = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <ReactQueryClassProvider queries={{
+            <QueryClientClassProvider queries={{
                 // useQuery example
                 todoSingle: {
                     hook: useQuery,
@@ -47,12 +47,12 @@ export const AppRoot = () => {
                 },
             }}>
                 <App/>
-            </ReactQueryClassProvider>
+            </QueryClientClassProvider>
         </QueryClientProvider>
     );
 }
 ```
-Once you have added provider, you can then use wrap your class component with `withReactQuery` method to get react-query data
+Once you have added provider, you can then use wrap your class component with `withQueryClient` method to get react-query data
 ```tsx
 
 class TodoList extends React.Component {
@@ -62,7 +62,7 @@ class TodoList extends React.Component {
         // for ya ;)
         console.log( 'debug', reactQueries);
         
-        // you can access data using same id you you defined in ReactQueryClassProvider queries props.
+        // you can access data using same id you you defined in QueryClientClassProvider queries props.
         if ( reactQueries?.todoSingle?.isLoading ) {
             return 'Loading data...';
         }
@@ -78,7 +78,7 @@ class TodoList extends React.Component {
     }
 }
 
-export default TodoList = withReactQuery(TodoList);
+export default TodoList = withQueryClient(TodoList);
 ```
 
 ### useQuery + options
@@ -87,14 +87,14 @@ export default TodoList = withReactQuery(TodoList);
 import React from 'react';
 
 import {QueryClient, QueryClientProvider, useQueries, useQuery} from "react-query";
-import {ReactQueryClassProvider, withReactQuery} from 'react-query-class-component';
+import {QueryClientClassProvider, withQueryClient} from 'react-query-class-component';
 
 const queryClient = new QueryClient();
 
 export const AppRoot = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <ReactQueryClassProvider queries={{
+            <QueryClientClassProvider queries={{
                 // useQuery example
                 todoSingle: {
                     hook: useQuery,
@@ -111,7 +111,7 @@ export const AppRoot = () => {
                 },
             }}>
                 <App/>
-            </ReactQueryClassProvider>
+            </QueryClientClassProvider>
         </QueryClientProvider>
     );
 }
@@ -123,14 +123,14 @@ export const AppRoot = () => {
 import React from 'react';
 
 import {QueryClient, QueryClientProvider, useQueries, useQuery} from "react-query";
-import {ReactQueryClassProvider, withReactQuery} from 'react-query-class-component';
+import {QueryClientClassProvider, withQueryClient} from 'react-query-class-component';
 
 const queryClient = new QueryClient();
 
 export const AppRoot = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <ReactQueryClassProvider queries={{
+            <QueryClientClassProvider queries={{
                 // useQueries example
                  todoMulti: {
                     hook: useQueries,
@@ -151,7 +151,7 @@ export const AppRoot = () => {
                 }
             }}>
                 <App/>
-            </ReactQueryClassProvider>
+            </QueryClientClassProvider>
         </QueryClientProvider>
     );
 }
@@ -165,7 +165,7 @@ class TodoList extends React.Component {
         // for ya ;)
         console.log( 'debug', reactQueries);
         
-        // you can access data using same id you you defined in ReactQueryClassProvider queries props.
+        // you can access data using same id you you defined in QueryClientClassProvider queries props.
         if ( reactQueries?.todoSingle?.isLoading ) {
             return 'Loading...';
         }
@@ -181,12 +181,12 @@ class TodoList extends React.Component {
     }
 }
 
-export default TodoList = withReactQuery(TodoList);
+export default TodoList = withQueryClient(TodoList);
 ```
 
 ## API
 
-### ReactQueryClassProvider
+### QueryClientClassProvider
 It should be placed within `QueryClientProvider`
 
 #####   Parameters
@@ -223,7 +223,7 @@ It should be placed within `QueryClientProvider`
             }}
     ```
 
-### withReactQuery
+### withQueryClient
 To get queries result in your class component you will need to wrap your class component with this method, then you access queries using `this.props.reactQuries` prop variable.
 
 #### Screenshot of "reactQueries" props value in class component

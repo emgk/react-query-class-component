@@ -7,7 +7,7 @@ export interface forwardRefProps {
   children: React.ReactNode;
 }
 
-export interface ReactQueryClassProviderProps {
+export interface QueryClientClassProviderProps {
   /**
    * List of queries in following format
    *

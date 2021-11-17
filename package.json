@@ -1,6 +1,6 @@
 {
   "name": "react-query-class-component",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Make react-query available for class based components",
   "author": "Govind Kumar (https://govind.js.org)",
   "homepage": "https://github.com/emgk/react-query-class-component",

@@ -1,0 +1,54 @@
+{
+  "name": "react-query-class-component",
+  "version": "1.0.0",
+  "description": "Make react-query available for class based components",
+  "author": "Govind Kumar (https://govind.js.org)",
+  "homepage": "https://github.com/emgk/react-query-class-component",
+  "contributors": [
+    "Govind Kumar (https://govind.js.org)"
+  ],
+  "main": "dist/index.js",
+  "types": "dist",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@babel/preset-typescript": "^7.12.7",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "prettier": "^2.2.1",
+    "@types/react": "^17.0.35",
+    "react": "^17.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emgk/react-query-class-component"
+  },
+  "bugs": {
+    "url": "https://github.com/emgk/react-query-class-component/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react-query",
+    "component",
+    "react",
+    "class",
+    "api",
+    "react-query-class-component",
+    "addon"
+  ]
+}

@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist",
   "scripts": {
-    "build": "tsc -p ."
+    "build": "rm -rf ./dist && tsc -p ."
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -50,5 +50,9 @@
     "api",
     "react-query-class-component",
     "addon"
+  ],
+  "dependencies": {},
+  "files": [
+    "dist"
   ]
 }

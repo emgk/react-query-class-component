@@ -15,14 +15,22 @@ export interface QueryClientClassProviderProps {
    *      [id1]: {
    *          hook: [react-query instance, eg. useQuery]
    *          params: [react-query hook params]
+   *          ...options
    *      },
    *      [id2]: {
-   *          method: [react-query instance, eg. useQuery]
-   *          receiver: [react-query QueryFunctionContext]
+   *          hook: [react-query instance, eg. useQuery]
+   *          params: [react-query hook params]
+   *          ...options
    *      },
    *      // ...and so on!
    * }
    */
   queries?: any; // queries map
   children: (props: any) => React.ReactNode;
+}
+
+export interface QueryClientHookProps {
+  hook: any;
+  params?: any; // hook params
+  children: any;
 }

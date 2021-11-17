@@ -1,5 +1,7 @@
 # React-Query-Class-Component
-A HOC Utility tool built for [react-query](https://www.npmjs.com/package/react-query), through this you can use react-query hooks to fetch and pass data in your React class based components.
+
+A HOC Utility tool built for [react-query](https://www.npmjs.com/package/react-query), through this you can use
+react-query hooks to fetch and pass data in your React class based components.
 
 [![NPM version](https://img.shields.io/npm/v/react-query-class-component.svg)](https://www.npmjs.com/package/react-query-class-component)
 [![npm](https://img.shields.io/npm/dt/react-query-class-component.svg)](https://www.npmjs.com/package/react-query-class-component)
@@ -13,23 +15,79 @@ A HOC Utility tool built for [react-query](https://www.npmjs.com/package/react-q
 ## Quick Setup
 
 Install package in your project
+
 ```composer log
 npm i react-query-class-component
 ```
+
 ```tsx
+// To pass query data globally
 import {QueryClientClassProvider, withQueryClient} from "react-query-class-component";
+
+// To use react-query hook in class component
+import {QueryClientHook} from "react-query-class-component";
 ```
 
 ## Usage with React-Query
 
-It supports almost all of the hooks, below are the examples of few ones:
+It supports almost all the hooks, below are the examples of few ones:
 
-### useQuery
+### Use react-query hook in component
+```tsx
+import React from 'react';
+
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClientHook } from 'react-query-class-component';
+
+const queryClient = new QueryClient();
+
+function App() {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <TodoList/>
+        </QueryClientProvider>
+    );
+}
+
+class TodoList extends React.Component {
+    render() {
+        return (
+            <QueryClientHook
+                hook={useQuery} // react query hook
+                params={
+                    [
+                        'todos', // keyName
+                        () => { // query function
+                            return fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json());
+                        },
+                        // ...options
+                    ]
+                }>
+                {({data, isLoading}) => {
+                    if (isLoading) return <h1>Loading</h1>;
+                    return (
+                        <div className="App">
+                            <h2>Todo list</h2>
+                            {
+                                data.map((query, key) => {
+                                    return <li key={key}>{query?.title}</li>;
+                                })
+                            }
+                        </div>
+                    );
+                }}
+            </QueryClientHook>
+        )
+    }
+}
+```
+
+### Pass data globally
 
 ```tsx
 import React from 'react';
 
-import {QueryClient, QueryClientProvider, useQueries, useQuery} from "react-query";
+import {QueryClient, QueryClientProvider, useQueries, useQuery} from "react-querynnnt";
 import {QueryClientClassProvider, withQueryClient} from 'react-query-class-component';
 
 const queryClient = new QueryClient();
@@ -45,58 +103,8 @@ export const AppRoot = () => {
                         return fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json())
                     }],
                 },
-            }}>
-                <App/>
-            </QueryClientClassProvider>
-        </QueryClientProvider>
-    );
-}
-```
-Once you have added provider, you can then use wrap your class component with `withQueryClient` method to get react-query data
-```tsx
-
-class TodoList extends React.Component {
-    render() {
-        const {reactQueries} = this.props;
-        
-        // for ya ;)
-        console.log( 'debug', reactQueries);
-        
-        // you can access data using same id you you defined in QueryClientClassProvider queries props.
-        if ( reactQueries?.todoSingle?.isLoading ) {
-            return 'Loading data...';
-        }
-        
-        // reperesent data
-        return (
-            <>
-                {reactQueries.todoSingle?.data.map((query, key) => {
-                    return <li key={key}>{query?.title}</li>;
-                })}
-            </>
-        )
-    }
-}
-
-export default TodoList = withQueryClient(TodoList);
-```
-
-### useQuery + options
-
-```tsx
-import React from 'react';
-
-import {QueryClient, QueryClientProvider, useQueries, useQuery} from "react-query";
-import {QueryClientClassProvider, withQueryClient} from 'react-query-class-component';
-
-const queryClient = new QueryClient();
-
-export const AppRoot = () => {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <QueryClientClassProvider queries={{
-                // useQuery example
-                todoSingle: {
+                // with options
+                todoSingleDisableRefetch: {
                     hook: useQuery,
                     params: [
                         {
@@ -109,30 +117,8 @@ export const AppRoot = () => {
                         }
                     ],
                 },
-            }}>
-                <App/>
-            </QueryClientClassProvider>
-        </QueryClientProvider>
-    );
-}
-```
-
-### useQueries
-
-```tsx
-import React from 'react';
-
-import {QueryClient, QueryClientProvider, useQueries, useQuery} from "react-query";
-import {QueryClientClassProvider, withQueryClient} from 'react-query-class-component';
-
-const queryClient = new QueryClient();
-
-export const AppRoot = () => {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <QueryClientClassProvider queries={{
                 // useQueries example
-                 todoMulti: {
+                todoMulti: {
                     hook: useQueries,
                     params: [
                         [
@@ -156,20 +142,22 @@ export const AppRoot = () => {
     );
 }
 ```
-```tsx
 
+Once you have finished passing queries in provider, then you can wrap your component with `withQueryClient` method to get queries result in `reactQueries` prop variable.
+
+```tsx
 class TodoList extends React.Component {
     render() {
         const {reactQueries} = this.props;
-        
+
         // for ya ;)
-        console.log( 'debug', reactQueries);
-        
+        console.log('debug', reactQueries);
+
         // you can access data using same id you you defined in QueryClientClassProvider queries props.
-        if ( reactQueries?.todoSingle?.isLoading ) {
-            return 'Loading...';
+        if (reactQueries?.todoSingle?.isLoading) {
+            return 'Loading data...';
         }
-        
+
         // reperesent data
         return (
             <>
@@ -186,12 +174,23 @@ export default TodoList = withQueryClient(TodoList);
 
 ## API
 
+### QueryClientHook
+To use react-query hook in class component
+##### Parameters
+
+- ```hook?: any```
+  - react-query hook , eg. useQuery, useQueries etc...
+- ```params?: any```
+  - List of params to pass in react-query hook
+    
 ### QueryClientClassProvider
+
 It should be placed within `QueryClientProvider`
 
-#####   Parameters
+##### Parameters
+
 - ```queries?: any```
-    - List of objects that contains react-query hook and params in following format: 
+    - List of objects that contains react-query hook and params in following format:
     ```tsx
         queries={{
                 'fetch-1': { // mention id here
@@ -224,10 +223,14 @@ It should be placed within `QueryClientProvider`
     ```
 
 ### withQueryClient
-To get queries result in your class component you will need to wrap your class component with this method, then you access queries using `this.props.reactQuries` prop variable.
+
+To get queries result in your class component you will need to wrap your class component with this method, then you
+access queries using `this.props.reactQuries` prop variable.
 
 #### Screenshot of "reactQueries" props value in class component
+
 ![Demo-screenshot](https://i.ibb.co/3Cg1Hfz/Screenshot-from-2021-11-17-14-13-52.png)
 
 ## Contribution
+
 Please raise issue or sent Pull Request if you find any bugs in package. 
